@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { IModule } from "..";
+import { IModule } from "../api";
 
 export class Application {
   static sharedContext: any;
