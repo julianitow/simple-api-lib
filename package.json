@@ -1,8 +1,8 @@
 {
   "name": "s1mpl3-api-l1b",
-  "version": "0.0.3",
+  "version": "0.0.4",
   "description": "",
-  "types": "dist/index.d.ts",
+  "types": "dist/api.d.ts",
   "scripts": {
     "build": "NODE_ENV=production npm run lint && tsc",
     "build-dev": "NODE_ENV=development tsc",
