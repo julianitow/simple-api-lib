@@ -1,6 +1,11 @@
 name: Build and push
 
-on: [push]
+on:
+  push:
+    branches:
+      - main
+  release:
+    types: [created]
 
 jobs:
   build:
@@ -11,6 +16,21 @@ jobs:
       id-token: write
     steps:
       - uses: actions/checkout@v5
+        with:
+          fetch-depth: 0
+      - name: Check version change
+        id: version_check
+        run: |
+          CURRENT_VERSION=$(node -p "require('./package.json').version")
+          git fetch origin main
+          PREV_VERSION=$(git show origin/main~1:package.json | node -p "JSON.parse(require('fs').readFileSync('/dev/stdin', 'utf8')).version" 2>/dev/null || echo "0.0.0")
+          if [ "$CURRENT_VERSION" != "$PREV_VERSION" ]; then
+            echo "version_changed=true" >> $GITHUB_OUTPUT
+            echo "Version changed from $PREV_VERSION to $CURRENT_VERSION"
+          else
+            echo "version_changed=false" >> $GITHUB_OUTPUT
+            echo "Version unchanged: $CURRENT_VERSION"
+          fi
       - name: Use Node.js
         uses: actions/setup-node@v4
         with:
@@ -19,6 +39,8 @@ jobs:
       - run: npm i -g pnpm
       - run: pnpm install --frozen-lockfile
       - run: pnpm run build
-      - run: pnpm publish --provenance --access public --no-git-checks
+      - name: Publish to npm
+        if: steps.version_check.outputs.version_changed == 'true'
+        run: pnpm publish --provenance --access public --no-git-checks
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
