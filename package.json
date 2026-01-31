@@ -1,6 +1,6 @@
 {
   "name": "s1mpl3-api-l1b",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "",
   "types": "dist/index.d.ts",
   "scripts": {
