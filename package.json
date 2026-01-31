@@ -1,0 +1,57 @@
+{
+  "name": "simple-api-lib",
+  "version": "0.0.1",
+  "description": "",
+  "types": "dist/index.d.ts",
+  "scripts": {
+    "build": "NODE_ENV=production npm run lint && tsc",
+    "build-dev": "NODE_ENV=development tsc",
+    "start": "node dist/main.js",
+    "start:watch": "DEBUG=true nodemon .",
+    "dev": "npm run build-dev && npm run start",
+    "lint": "eslint --config eslint.config.mjs"
+  },
+  "repository": {
+    "type": "git",
+    "url": ""
+  },
+  "author": "Julianitow",
+  "license": "MIT",
+  "homepage": "https://github.com/julianitow",
+  "dependencies": {
+    "@koa/bodyparser": "^5.1.1",
+    "@koa/cors": "^5.0.0",
+    "bcrypt": "^5.1.1",
+    "googleapis": "^144.0.0",
+    "jsonwebtoken": "^9.0.2",
+    "koa": "^2.15.3",
+    "koa-body": "^6.0.1",
+    "koa-jwt": "^4.0.4",
+    "koa-router": "^12.0.1",
+    "mongoose": "^8.3.2",
+    "node-cache": "^5.1.2",
+    "sharp": "^0.34.1"
+  },
+  "devDependencies": {
+    "@eslint/js": "^9.0.0",
+    "@types/bcrypt": "^5.0.2",
+    "@types/jsonwebtoken": "^9.0.7",
+    "@types/koa__cors": "^5.0.0",
+    "@types/koa-router": "^7.4.8",
+    "@types/node": "^18.19.31",
+    "eslint": "^8.57.0",
+    "nodemon": "^3.1.0",
+    "typescript": "^5.4.5",
+    "typescript-eslint": "^7.7.0"
+  },
+  "bin": "dist/app.js",
+  "pkg": {
+    "scripts": "dist/**/*.js",
+    "targets": [
+      "node16-win-arm64",
+      "node16-macos-arm64",
+      "node16-win-x64"
+    ],
+    "outputPath": "bin"
+  }
+}
